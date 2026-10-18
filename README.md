@@ -3,7 +3,7 @@
 Finds passwords, API keys, tokens and private keys in text, on Android and the JVM — the [aparte-secrets](https://huggingface.co/apartejs/aparte-secrets) model (196 KB, int8) bundled, offline, no dependency but the Kotlin standard library.
 
 ```kotlin
-implementation("dev.apartejs:secrets:1.1.0")   // build.gradle.kts
+implementation("dev.apartejs:secrets:1.1.1")   // build.gradle.kts
 
 val secrets = Secrets.load()   // load once, share across threads
 secrets.detect("the wifi password is Sunflower77# for the guests")

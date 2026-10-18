@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation("dev.apartejs:secrets:1.1.1")
+    implementation("dev.apartejs:secrets:1.1.0")
 }
 
 application {

@@ -10,7 +10,7 @@ plugins {
 // The middle number is the version of the model weights, as on npm and Hugging Face.
 allprojects {
     group = "dev.apartejs"
-    version = "1.1.1"
+    version = "1.1.0"
 }
 
 subprojects {

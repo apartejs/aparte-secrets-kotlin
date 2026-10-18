@@ -20,16 +20,21 @@ It is the same runtime as the JavaScript package [`@aparte/secrets`](https://www
 
 ## How good
 
-On a chat test written after training (440 messages, English and French), strict span F1 **0.76** (OpenAI privacy-filter 0.53, detect-secrets 0.27, gitleaks 0.29). Every number, and the limits: [the model card](https://huggingface.co/apartejs/aparte-secrets).
+On a chat test written after training (440 messages, English and French), strict span F1: **0.76**, against 0.53 for OpenAI privacy-filter (1.5 B parameters), 0.27 for detect-secrets and 0.29 for gitleaks. On CredData (Samsung's public benchmark, line-level F1): **0.85**, against 0.73, 0.57 and 0.39. On clean code it is noisier than regex scanners (0.17 false alerts per 1,000 lines, against 0.06 and 0.02). Every number, and the limits: [the model card](https://huggingface.co/apartejs/aparte-secrets).
+
+## Speed
+
+About **13 ms** for a 250-character chat message on one desktop CPU core (OpenJDK 21), and about **55 ms** on a mid-range Android phone (MediaTek Dimensity 7050, Android 15) — measured on the 450 chat messages of the benchmark, like the JavaScript runtime. Every runtime: [the model card](https://huggingface.co/apartejs/aparte-secrets#speed).
 
 ## Tests
 
 ```bash
 ./gradlew test                                              # API tests
 APARTE_SECRETS_REFS=references_int8.jsonl ./gradlew test    # + equality with the reference spans
+APARTE_SECRETS_GOLD=gold.jsonl ./gradlew test --tests '*BenchTest*' -i   # speed
 ```
 
-`references_int8.jsonl` is on [Hugging Face](https://huggingface.co/apartejs/aparte-secrets/tree/main/references): it holds secret-shaped strings, so it is not in this repository.
+`gold.jsonl` is the [benchmark](https://huggingface.co/datasets/apartejs/aparte-secrets-gold). `references_int8.jsonl` is on [Hugging Face](https://huggingface.co/apartejs/aparte-secrets/tree/main/references): it holds secret-shaped strings, so it is not in this repository.
 
 ## Versions
 

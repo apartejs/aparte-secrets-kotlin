@@ -43,13 +43,13 @@ public class OnDeviceParityTest {
                 if (line.trim().isEmpty()) continue;
                 JSONObject o = new JSONObject(line);
                 String text = o.getString("text");
-                int[] cps = text.codePoints().toArray();
                 JSONArray ref = o.getJSONArray("spans");
                 List<Span> mine = secrets.detect(text);
                 boolean same = mine.size() == ref.length();
                 for (int i = 0; same && i < ref.length(); i++) {
                     JSONObject s = ref.getJSONObject(i);
-                    String value = new String(cps, s.getInt("start"), s.getInt("end") - s.getInt("start"));   // Python offsets: code points
+                    // Python offsets count code points; String.codePoints() needs Android 7, offsetByCodePoints does not
+                    String value = text.substring(text.offsetByCodePoints(0, s.getInt("start")), text.offsetByCodePoints(0, s.getInt("end")));
                     same = mine.get(i).getText().equals(value) && mine.get(i).getSubtype().equals(s.getString("subtype"))
                             && Math.abs(mine.get(i).getScore() - s.getDouble("score")) <= 2e-4;
                 }
